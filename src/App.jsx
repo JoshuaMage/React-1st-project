@@ -6,13 +6,25 @@ import TabButton from "./components/TabButton.jsx";
 import { EXAMPLES } from "./data.js";
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState("jsx");
+  const [selectedTopic, setSelectedTopic] = useState();
 
   function handSelect(selectedButton) {
     setSelectedTopic(selectedButton);
     //console.log(selectedTopic);
   }
   console.log("App component is executed");
+
+  let tabContent = <p>Plase select Topic!</p>;
+
+  if (selectedTopic) {
+    tabContent = <div id="tab-content">
+      <h3>{EXAMPLES[selectedTopic].title}</h3>
+      <p>{EXAMPLES[selectedTopic].description}</p>
+      <pre>
+        <code>{EXAMPLES[selectedTopic].code}</code>
+      </pre>
+    </div>;
+  }
 
   return (
     <div>
@@ -35,19 +47,13 @@ function App() {
           <h2>Example</h2>
           <menu>
             <TabButton onSelect={() => handSelect("components")}>
-              components
+              COMPONENTS
             </TabButton>
-            <TabButton onSelect={() => handSelect("jsx")}>jsx</TabButton>
-            <TabButton onSelect={() => handSelect("props")}>props</TabButton>
-            <TabButton onSelect={() => handSelect("state")}>state</TabButton>
+            <TabButton onSelect={() => handSelect("jsx")}>JSX</TabButton>
+            <TabButton onSelect={() => handSelect("props")}>PROPS</TabButton>
+            <TabButton onSelect={() => handSelect("state")}>STATE</TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title}</h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTopic].code}</code>
-            </pre>
-          </div>
+          {tabContent}
         </section>
       </main>
     </div>
